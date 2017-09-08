@@ -1,0 +1,8 @@
+ppp:
+  peers:
+    - name: eolo
+      user: '<{lpass 2783418480082478824 user}>'
+      password: '<{lpass 2783418480082478824 pass}>'
+
+
+# vim: set filetype=eruby.yaml :

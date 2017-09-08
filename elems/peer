@@ -1,0 +1,94 @@
+# ─────────────────────────────────────────────────────────────────────────────┐
+#                                                                              │
+# Name:    elems/peer                                                          │
+# Summary: PPP Configuration file.                                             │
+# Authors:                                                                     │
+#   - Alessandro Molari <molari.alessandro@gmail.com> (alem0lars)              │
+#                                                                              │
+# Project:                                                                     │
+#   - Homepage:        https://github.com/alem0lars/configs-ppp                │
+#   - Getting started: see README.md in the project root folder                │
+#                                                                              │
+# License: Apache v2.0 (see below)                                             │
+#                                                                              │
+# ─────────────────────────────────────────────────────────────────────────────┤
+#                                                                              │
+# Licensed to the Apache Software Foundation (ASF) under one more contributor  │
+# license agreements.  See the NOTICE file distributed with this work for      │
+# additional information regarding copyright ownership. The ASF licenses this  │
+# file to you under the Apache License, Version 2.0 (the "License"); you may   │
+# not use this file except in compliance with the License.                     │
+# You may obtain a copy of the License at                                      │
+#                                                                              │
+#   http://www.apache.org/licenses/LICENSE-2.0                                 │
+#                                                                              │
+# Unless required by applicable law or agreed to in writing, software          │
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT    │
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.             │
+# See the License for the specific language governing permissions and          │
+# limitations under the License.                                               │
+#                                                                              │
+# ─────────────────────────────────────────────────────────────────────────────┤
+<% define_locals do
+  variable "ppp.peers", as: :peers
+
+  # TODO we can support just one peer atm, see issue #53
+  computed(:peer) { local!(:peers)[0] }
+end %>
+# ─────────────────────────────────────────────────────────────────────────────┘
+
+
+nolog
+
+# Try to get the IP address from the ISP.
+noipdefault
+
+# Try to get the name server addresses from the ISP.
+usepeerdns
+
+# Use this connection as the default route.
+defaultroute
+defaultroute-metric 300
+
+# Detatch after ppp0 interface is created.
+updetach
+
+# Replace previous default route
+# This requires a special patch to ppp
+# https://sources.debian.net/src/ppp/2.4.7-1%2B1~exp1/debian/patches/cifdefroute.dif/
+# replacedefaultroute
+
+# rp-pppoe plug-in makes PPPoE connection so rp-pppoe package is not needed
+# Possibly, you may need to change interface according your configuration
+# plugin rp-pppoe.so eth1
+
+# Uncomment if you need on-demand connection.
+#demand
+
+# Disconnect after 300 seconds (5 minutes) of idle time.
+#idle 300
+
+# Hide password from log entries.
+hide-password
+
+# Send echo requests.
+lcp-echo-interval 20
+lcp-echo-failure 3
+
+# Do not authenticate ISP peer.
+noauth
+
+# Control connection consistency
+persist
+maxfail 0
+
+# Control MTU size if your ISP does not force it
+#mtu 1492
+
+user "<%= local!(:peer)[:user] %>"
+
+# Compression
+bsdcomp 15
+deflate 15
+
+# vim: set filetype=eruby.conf :
