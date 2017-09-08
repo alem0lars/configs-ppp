@@ -1,6 +1,9 @@
+# => inherits: generic <= #
+
+
 ppp:
   peers:
-    - name: eolo
+    eolo:
       user: '<{lpass 2783418480082478824 user}>'
       password: '<{lpass 2783418480082478824 pass}>'
 

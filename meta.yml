@@ -2,7 +2,7 @@ elems:
 
   # TODO we can support just one peer atm, see issue #53
   - src:  ^peer$
-    dst:  /etc/ppp/peers/<%= get_var!("ppp.peers")[0][:name] %>
+    dst:  /etc/ppp/peers/<%= get_var!("ppp.peers").first[0] %>
     only: f?ppp
 
   - src:  ^(chap-secrets)$

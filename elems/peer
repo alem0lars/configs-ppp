@@ -33,7 +33,7 @@
   variable "ppp.peers", as: :peers
 
   # TODO we can support just one peer atm, see issue #53
-  computed(:peer) { local!(:peers)[0] }
+  computed(:peer) { local!(:peers).first[1] }
 end %>
 # ─────────────────────────────────────────────────────────────────────────────┘
 

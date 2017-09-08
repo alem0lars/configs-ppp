@@ -1,0 +1,10 @@
+# => inherits: alem0lars <= #
+
+
+ppp:
+  peers:
+    eolo:
+      iface: eth1
+
+
+# vim: set filetype=eruby.yaml :
