@@ -4,8 +4,8 @@
 ppp:
   peers:
     eolo:
-      user: '<{lpass 2783418480082478824 user}>'
-      password: '<{lpass 2783418480082478824 pass}>'
+      user: '<{lpass 2783418480082478824,user}>'
+      password: '<{lpass 2783418480082478824,pass}>'
 
 
 # vim: set filetype=eruby.yaml :
